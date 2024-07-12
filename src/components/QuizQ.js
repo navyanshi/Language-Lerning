@@ -1,14 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import QuizScenario from './QuizScenario';
 import QuizPicture from './QuizPicture';
 import QuizQuestion from './QuizQuestion';
 import QuizAnswers from './QuizAnswers';
 
 class QuizQ extends Component {
-  constructor() {
-    super()
-  }
-
   render() {
     return (
       <div>
