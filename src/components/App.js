@@ -34,7 +34,7 @@ class App extends Component {
       return (
       <div>
         <main>
-          <img src="https://image.ibb.co/jGCwEx/la_logo.png" alt="sample image"/>
+          <img src="https://image.ibb.co/jGCwEx/la_logo.png" alt=""/>
           <Headers/>
           <NavButton onClick={this.login}>
             <i class="material-icons">airplanemode_active</i>Login
