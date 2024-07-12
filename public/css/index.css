@@ -1,6 +1,6 @@
 html, body {
   /* background */
-  background: radial-gradient(darkblue, black);
+  background: radial-gradient(rgb(1, 255, 230), rgb(23, 19, 19));
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
