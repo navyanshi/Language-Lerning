@@ -1,57 +1,40 @@
-import React, {Component} from 'react'
-import SubHeader from './SubHeader'
+import React, { Component } from 'react';
+import SubHeader from './SubHeader';
 import SubmitButton from './SubmitButton';
 import Story from './Story';
-import Text from './styledComponents/text.js'
+import Text from './styledComponents/text.js';
 
 class ResultsPage extends Component {
-  constructor() {
-    super()
-  }
-
   decider() {
     if (this.props.storyState === true) {
       return 'Story';
     } else return 'ResultsPage';
-  };
+  }
 
-  randomnChoice = strings => {
+  randomnChoice = (strings) => {
     return strings[Math.floor(Math.random() * strings.length)];
   };
 
   stringPrinter = (worstScore, badScore, averageScore, goodScore, perfectScore) => {
     if (this.props.score === 0) {
-      return (
-        this.randomnChoice(worstScore)
-      );
+      return this.randomnChoice(worstScore);
     }
     if (this.props.score > 0 && this.props.score <= 3) {
-      return (
-        this.randomnChoice(badScore)
-      );
+      return this.randomnChoice(badScore);
     }
     if (this.props.score === 4) {
-      return (
-        this.randomnChoice(averageScore)
-      );
+      return this.randomnChoice(averageScore);
     }
     if (this.props.score > 4 && this.props.score <= 7) {
-      return (
-        this.randomnChoice(goodScore)
-      );
-    } else return (
-      this.randomnChoice(perfectScore)
-    )
+      return this.randomnChoice(goodScore);
+    } else return this.randomnChoice(perfectScore);
   };
 
   whatLanguage = () => {
-    if (this.props.french === true && this.props.frenchScen1 === true) {
-      return "French"
-    } if (this.props.french === true && this.props.frenchScen2 === true) {
-      return "French"
-    } else return "Spanish"
+    if (this.props.french === true && (this.props.frenchScen1 === true || this.props.frenchScen2 === true)) {
+      return 'French';
+    } else return 'Spanish';
   };
-
 
   render() {
     const worstScore = [
@@ -65,9 +48,7 @@ class ResultsPage extends Component {
       "Don't worry about it. Just repeat these scenarios and drill in those answers!"
     ];
 
-    const averageScore = [
-      "Bang on 50%. You can do better."
-    ];
+    const averageScore = ["Bang on 50%. You can do better."];
 
     const goodScore = [
       "Well done! You are well on your way to grasping the basics in " + this.whatLanguage(),
@@ -77,48 +58,30 @@ class ResultsPage extends Component {
     const perfectScore = [
       'Impressive. Your ' + this.whatLanguage() + ' is great',
       'Perfect score! How many times have you played this scenario?!'
-
     ];
 
     const Views = {
       ResultsPage: (
         <div>
           <Text>
-            <SubHeader
-              subHeader={"Your score is " + this.props.score}/>
-            <p id="outputMessage">
-              {this.stringPrinter(worstScore, badScore, averageScore, goodScore, perfectScore)}
-            </p>
-            <SubmitButton
-              buttonName={"Try another quiz"}
-              handleDataSubmitted={this.props.handleDataSubmitted}
-            />
-            <SubmitButton
-              buttonName={"See your results"}
-              handleDataSubmitted={this.props.handleRetryQuiz}
-            />
+            <SubHeader subHeader={"Your score is " + this.props.score} />
+            <p id="outputMessage">{this.stringPrinter(worstScore, badScore, averageScore, goodScore, perfectScore)}</p>
+            <SubmitButton buttonName={"Try another quiz"} handleDataSubmitted={this.props.handleDataSubmitted} />
+            <SubmitButton buttonName={"See your results"} handleDataSubmitted={this.props.handleRetryQuiz} />
           </Text>
         </div>
       ),
 
       Story: (
         <div>
-          <SubHeader
-            subHeader={"Your score is " + this.props.score}/>
-          <SubmitButton
-            buttonName={"Try another quiz"}
-            handleDataSubmitted={this.props.handleDataSubmitted}
-          />
-          <Story/>
+          <SubHeader subHeader={"Your score is " + this.props.score} />
+          <SubmitButton buttonName={"Try another quiz"} handleDataSubmitted={this.props.handleDataSubmitted} />
+          <Story />
         </div>
-      ),
+      )
     };
 
-    return (
-      <div>
-        {Views[this.decider()]}
-      </div>
-    )
+    return <div>{Views[this.decider()]}</div>;
   }
 }
 
