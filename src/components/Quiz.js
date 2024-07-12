@@ -3,7 +3,6 @@ import QuizQ from './QuizQ';
 import ResultsPage from './ResultsPage';
 import axios from 'axios';
 
-
 class Quiz extends Component {
   constructor() {
     super();
@@ -15,141 +14,137 @@ class Quiz extends Component {
   }
 
   concatenateAnswer1 = () => {
-    var string = 'this.props.answer' + (this.state.counter) + "_" + 1
-    return eval(string)
+    const answerProp = `answer${this.state.counter}_1`;
+    return this.props[answerProp];
   };
 
   concatenateAnswer2 = () => {
-    var string = 'this.props.answer' + (this.state.counter) + "_" + 2
-    return eval(string)
+    const answerProp = `answer${this.state.counter}_2`;
+    return this.props[answerProp];
   };
 
   concatenateAnswer3 = () => {
-    var string = 'this.props.answer' + (this.state.counter) + "_" + 3
-    return eval(string)
+    const answerProp = `answer${this.state.counter}_3`;
+    return this.props[answerProp];
   };
 
   concatenateCorrectAnswer = () => {
-    var string = 'this.props.correctAnswer' + (this.state.counter)
-    return eval(string)
+    const correctAnswerProp = `correctAnswer${this.state.counter}`;
+    return this.props[correctAnswerProp];
   };
 
   handleAnswerSubmitted1 = () => {
-    this.setState({
-      counter: this.state.counter + 1
-    });
+    this.setState(prevState => ({
+      counter: prevState.counter + 1
+    }));
 
     axios.post('http://localhost:3001/api/scenario', {
       user_answer: this.concatenateAnswer1(),
       correct_answer: this.concatenateCorrectAnswer()
     })
-
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    .then(function (res) {
+      console.log(res);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   };
 
   handleAnswerSubmitted2 = () => {
-    this.setState({
-      counter: this.state.counter + 1
-    });
+    this.setState(prevState => ({
+      counter: prevState.counter + 1
+    }));
 
-
-    if (this.state.counter + 1 == 1) {
+    if (this.state.counter + 1 === 1) {
       axios.delete('http://localhost:3001/api/scenario')
         .then(res => {
           console.log('Cleaned database');
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     }
+
     axios.post('http://localhost:3001/api/scenario', {
       user_answer: this.concatenateAnswer2(),
       correct_answer: this.concatenateCorrectAnswer()
     })
-
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    .then(function (res) {
+      console.log(res);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   };
 
   handleAnswerSubmitted3 = () => {
+    this.setState(prevState => ({
+      counter: prevState.counter + 1
+    }));
 
-    this.setState({
-      counter: this.state.counter + 1
-    });
-    if (this.state.counter + 1 == 1) {
+    if (this.state.counter + 1 === 1) {
       axios.delete('http://localhost:3001/api/scenario')
         .then(res => {
           console.log('Cleaned database');
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     }
 
     axios.post('http://localhost:3001/api/scenario', {
       user_answer: this.concatenateAnswer3(),
       correct_answer: this.concatenateCorrectAnswer()
     })
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    .then(function (res) {
+      console.log(res);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   };
 
   handleCorrectAnswerSubmitted = () => {
-    this.setState({
-      counter: this.state.counter + 1,
-      score: this.state.score + 1
-    });
+    this.setState(prevState => ({
+      counter: prevState.counter + 1,
+      score: prevState.score + 1
+    }));
 
     axios.post('http://localhost:3001/api/scenario', {
       user_answer: this.concatenateCorrectAnswer(),
       correct_answer: this.concatenateCorrectAnswer()
     })
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    .then(function (res) {
+      console.log(res);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
   };
-
 
   decider = () => {
     if (this.state.counter === 8) {
       return 'ResultsPage';
     } else if (this.state.counter === 1) {
-      return 'QuizQ2'
+      return 'QuizQ2';
     } else if (this.state.counter === 2) {
       return 'QuizQ3';
     } else if (this.state.counter === 3) {
-      return 'QuizQ4'
+      return 'QuizQ4';
     } else if (this.state.counter === 4) {
-      return 'QuizQ5'
+      return 'QuizQ5';
     } else if (this.state.counter === 5) {
-      return 'QuizQ6'
+      return 'QuizQ6';
     } else if (this.state.counter === 6) {
-      return 'QuizQ7'
+      return 'QuizQ7';
     } else if (this.state.counter === 7) {
-      return 'QuizQ8'
+      return 'QuizQ8';
+    } else {
+      return 'QuizQ1';
     }
-    else return 'QuizQ1';
   };
 
-
   render() {
-
     const Views = {
       ResultsPage: (
         <ResultsPage
@@ -180,14 +175,14 @@ class Quiz extends Component {
           answer3={this.props.answer1_3}
         />
       ),
-
+      
       QuizQ2: (
         <QuizQ
+          handleCorrectAnswerSubmitted={this.handleCorrectAnswerSubmitted}
           handleAnswerSubmitted1={this.handleAnswerSubmitted1}
           handleAnswerSubmitted2={this.handleAnswerSubmitted2}
           handleAnswerSubmitted3={this.handleAnswerSubmitted3}
-          handleCorrectAnswerSubmitted={this.handleCorrectAnswerSubmitted}
-          scenario={this.props.scenario2}
+          scenario={this.props.scenario1}
           picture={this.props.picture2}
           question={this.props.question2}
           answer1={this.props.answer2_1}
@@ -196,7 +191,7 @@ class Quiz extends Component {
           answer3={this.props.answer2_3}
         />
       ),
-
+      
       QuizQ3: (
         <QuizQ
           handleAnswerSubmitted1={this.handleAnswerSubmitted1}
@@ -301,4 +296,4 @@ class Quiz extends Component {
   }
 }
 
-export default Quiz
+export default Quiz;
